@@ -1,20 +1,45 @@
 //! Start by creating the variables for the data recorded
-const tempData = ["32°F, 25°C, 70°F, 18°C, 80°F, 15°C, 72°F, 28°C, 68°F, 20°C, 75°F, 23°C, 82°F, 30°C, 65°F, 22°C, 77°F, 26°C, 78°F, 24°C, 73°F, 21°C, 79°F, 27°C, 71°F, 19°C, 74°F, 17°C, 76°F, 29°C"];
+const tempData = "32°F, 25°C, 70°F, 18°C, 80°F, 15°C, 72°F, 28°C, 68°F, 20°C, 75°F, 23°C, 82°F, 30°C, 65°F, 22°C, 77°F, 26°C, 78°F, 24°C, 73°F, 21°C, 79°F, 27°C, 71°F, 19°C, 74°F, 17°C, 76°F, 29°C";
 
-const tempDataInNumbers = tempData.map(data => {
-    Number(data.match(/\d+/));
-});
-
-console.log(tempDataInNumbers);
+const tempDataInNumbers = tempData.match(/\d+/g).map(Number);
 //* Then work on the conversion of the temperature from Celsius to Fahrenheit (or viceversa)
+function celsiusToFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32
+}
 
+function fahrenheitToCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9
+}
+
+const tempInFahrenheit = [];
+for (let i = 0; i < tempDataInNumbers.length; i += 2) {
+    tempInFahrenheit.push(tempDataInNumbers[i]);
+    tempInFahrenheit.push(celsiusToFahrenheit(tempDataInNumbers[i + 1]));
+}
+
+const tempInCelsius = [];
+for (let i = 0; i < tempDataInNumbers.length; i += 2) {
+    tempInCelsius.push(fahrenheitToCelsius(tempDataInNumbers[i]))
+    tempInCelsius.push(tempDataInNumbers[i + 1]);
+}
 
 //! Start the calculation of the total temperatures
+const tot_temperature_in_fahrenheit = tempInFahrenheit.reduce((acc, temp) => acc + temp);
+
 //* Then apply the conversion to calculate the total in the other unit of measurement
+const tot_temperature_in_celsius = tempInCelsius.reduce((acc, temp) => acc + temp);
+
 //* Call the variables: tot_temperature_in_fahrenheit and tot_temperature_in_celsius
+console.log(tot_temperature_in_fahrenheit);
+console.log(tot_temperature_in_celsius);
 
 //! Start the calculation of the average temperatures
+const avg_temperature_in_fahrenheit = tot_temperature_in_fahrenheit / tempInFahrenheit.length;
+const avg_temperature_in_celsius = tot_temperature_in_celsius / tempInCelsius.length;
+
 //* Call the variables: avg_temperature_in_fahrenheit and avg_temperature_in_celsius
+console.log(avg_temperature_in_fahrenheit);
+console.log(avg_temperature_in_celsius);
 
 //! Console.log the results for your own inspection if you'd like
 
